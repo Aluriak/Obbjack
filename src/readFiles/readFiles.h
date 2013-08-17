@@ -37,12 +37,20 @@
  * NAMESPACE
  */
 namespace readFiles {
+        // GET ENGINE
         Engine getEngineFrom(
                 std::string fileBorrowers_name,
                 std::string fileObjects_name
                 );
         void readBorrowers(std::string, Engine*);
         void readObjects(std::string, Engine*);
+        // SET ENGINE
+        void setEngineTo(Engine*, 
+                std::string fileBorrowers_name,
+                std::string fileObjects_name
+                );
+        void writeBorrowers(std::string, Engine*);
+        void writeObjects(std::string, Engine*);
 }
 
 
