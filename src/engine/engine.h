@@ -45,7 +45,7 @@ class Engine {
 		Engine();
 		~Engine();
 	// PUBLIC METHODS
-                void addObject(std::string, std::string, std::string);
+                void addObject(std::string, std::string, std::string, std::string);
                 void rmvObject(Object*);
                 void addBorrower(std::string, std::string);
                 void rmvBorrower(Borrower*);

@@ -29,10 +29,10 @@ Engine::~Engine() {
 * ADD OBJECT
 */
 // Add object only if the given name correspond to an existing borrower
-void Engine::addObject(std::string name, std::string type, std::string borrower){
+void Engine::addObject(std::string name, std::string type, std::string date, std::string borrower) {
         Borrower* p_borrower = name2borrower(borrower);
         if(p_borrower != NULL) {
-                list_object.push_back(new Object(name, type, p_borrower));
+                list_object.push_back(new Object(name, type, Date::from(date), p_borrower));
         }
 }
 
@@ -98,7 +98,8 @@ void Engine::operator=(const Engine& eng) {
 // OBJECTS
         for(list<Object*>::const_iterator it = eng.list_object.begin(); 
                         it != eng.list_object.end(); it++) {
-                addObject((*it)->getName(), (*it)->getType(), (*it)->getBorrowerName());
+                addObject(      (*it)->getName(), (*it)->getType(), 
+                                (*it)->getDate(), (*it)->getBorrowerName());
         }
 }
 
