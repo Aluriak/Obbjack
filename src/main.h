@@ -9,9 +9,6 @@
 #include <QApplication>
 // STANDARD
 #include <iostream>
-#include <fstream>
-#include <string>
-#include <vector>
 // LOCAL
 #include "../utils/utils.h"
 #include "obbjack/obbjack.h"
