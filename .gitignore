@@ -4,3 +4,4 @@
 *.pro
 Makefile
 Obbjack
+moc_*
