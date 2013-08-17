@@ -18,6 +18,17 @@ int pow(int a, int b) {
 
 
 /*
+ * STR 2 INT
+ */
+int str2int(std::string str) {
+        istringstream buffer(str);
+        int value;
+        buffer >> value;
+        return value;
+}
+
+
+/*
  * STR 2 QSTR
  */
 QString str2qstr(string str) {
@@ -35,6 +46,18 @@ string qstr2str(QString str) {
     string inter("");
     inter = str.toStdString();
     return inter;
+}
+
+
+
+
+/*
+ * CONST MKTIME
+ */
+// like mktime, but no argument modification
+time_t const_mktime(const struct tm * const const_date) {
+        struct tm date = *const_date;
+        return mktime(&date);
 }
 
 
