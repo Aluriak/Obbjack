@@ -11,6 +11,7 @@
 #include <string>
 // LOCAL
 #include "../utils/utils.h"
+#include "../date/date.h"
 #include "../borrower/borrower.h"
 
 
@@ -37,20 +38,22 @@
 class Object {
         public:
                 // CONSTRUCTORS
-                Object(const std::string, const std::string, 
+                Object(const std::string, const std::string, const Date, 
                                 Borrower*);
                 ~Object();
                 // METHODS
                 std::ostream& printIn(std::ostream&) const;
                 // ACCESSORS
-                std::string getName() const { return name; }
-                std::string getType() const { return type; }
+                std::string getName()   const { return name; }
+                std::string getType()   const { return type; }
+                Date getDate()          const { return date; }
                 Borrower* getBorrower() const { return borrower; }
                 std::string getBorrowerName() const { return borrower->getName(); }
         private:
         // ATTRIBUTES
                 std::string name;
                 std::string type;
+                Date date;
                 Borrower* borrower;
         // PRIVATES METHODS
 };

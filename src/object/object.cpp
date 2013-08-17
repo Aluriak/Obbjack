@@ -7,9 +7,9 @@ using namespace std;
 /****************************************************
  *              CONSTRUCTORS
  ****************************************************/
-Object::Object(const std::string name_, const std::string type_, 
+Object::Object(const std::string name_, const std::string type_, const Date date_, 
                 Borrower* borrower_) : 
-        name(name_), type(type_), borrower(borrower_) {
+        name(name_), type(type_), date(date_), borrower(borrower_) {
 }
 
 
