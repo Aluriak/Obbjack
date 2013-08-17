@@ -13,7 +13,7 @@ Obbjack::Obbjack(std::string file_borrower_, std::string file_object_) :
                 engine = readFiles::getEngineFrom(file_borrower, file_object);
         // WINDOW
                 setWindowTitle(PRGM_NAME);
-                setGeometry(0,0,PRGM_WIDTH,PRGM_HEIGH);
+                setMinimumSize(PRGM_WIDTH,PRGM_HEIGH);
         // WIDGETS
                 // QPushButton
                 button_quit = new QPushButton("Quit", this);
@@ -50,8 +50,8 @@ Obbjack::Obbjack(std::string file_borrower_, std::string file_object_) :
                                 this, SLOT(launchCreatBorWindow()));
                 QObject::connect(button_creatobj, SIGNAL(clicked(bool)),
                                 this, SLOT(launchCreatObjWindow()));
-                //QObject::connect(button_save, SIGNAL(clicked(bool)),
-                                //this, SLOT(launchSaving()));
+                QObject::connect(button_save, SIGNAL(clicked(bool)),
+                                this, SLOT(launchSaving()));
 
 }
 
@@ -74,10 +74,11 @@ Obbjack::~Obbjack() {
 void Obbjack::initializeObjectTable() {
         // TABLE
                 table_objects->setRowCount(1);
-                table_objects->setColumnCount(3);
+                table_objects->setColumnCount(4);
                         table_objects->setColumnWidth(0,200);
                         table_objects->setColumnWidth(1,200);
-                        table_objects->setColumnWidth(2,200);
+                        table_objects->setColumnWidth(2,100);
+                        table_objects->setColumnWidth(3,200);
         // QBRUSH
                 QBrush title_background(QColor(150,100,0));
         // ITEMS
@@ -87,14 +88,17 @@ void Obbjack::initializeObjectTable() {
         QTableWidgetItem* item_type = new QTableWidgetItem("Type");
                 item_type->setTextAlignment(Qt::AlignCenter | Qt::AlignVCenter);
                 item_type->setBackground(title_background);
+        QTableWidgetItem* item_date = new QTableWidgetItem("Return date");
+                item_date->setTextAlignment(Qt::AlignCenter | Qt::AlignVCenter);
+                item_date->setBackground(title_background);
         QTableWidgetItem* item_borrower = new QTableWidgetItem("Borrower");
-                item_borrower->setTextAlignment(
-                                Qt::AlignCenter | Qt::AlignVCenter);
+                item_borrower->setTextAlignment(Qt::AlignCenter | Qt::AlignVCenter);
                 item_borrower->setBackground(title_background);
         // ASSIGNMENT
                 table_objects->setItem(0,0, item_name);
                 table_objects->setItem(0,1, item_type);
-                table_objects->setItem(0,2, item_borrower);
+                table_objects->setItem(0,2, item_date);
+                table_objects->setItem(0,3, item_borrower);
         // OBJECTS
                 printObjectsOnTable();
         // BUTTONS
@@ -135,6 +139,7 @@ void Obbjack::launchCreatBorWindow() {
  */
 // Save current Engine to files
 void Obbjack::launchSaving() {
+        readFiles::setEngineTo(&engine, file_borrower, file_object);
 }
 
 
@@ -166,56 +171,28 @@ void Obbjack::printObjectsOnTable() {
         for(unsigned int i = 0, count = objects.size();
                         i < count; i++) {
                 // CREAT TABLE ITEMS
-                QTableWidgetItem* item_name 
-                        = new QTableWidgetItem(
+                QTableWidgetItem* item_name = new QTableWidgetItem(
                                                 objects[i].getName().
                                                 c_str());
-                        item_name->setTextAlignment(
-                                        Qt::AlignLeft|Qt::AlignVCenter);
+                                item_name->setTextAlignment(Qt::AlignLeft|Qt::AlignVCenter);
                 QTableWidgetItem* item_type = new QTableWidgetItem(
                                 objects[i].getType().c_str());
-                        item_type->setTextAlignment(
-                                        Qt::AlignCenter | Qt::AlignVCenter);
-                QTableWidgetItem* item_borrower 
-                        = new QTableWidgetItem(
+                                item_type->setTextAlignment(Qt::AlignCenter | Qt::AlignVCenter);
+                QTableWidgetItem* item_date = new QTableWidgetItem(
+                                                objects[i].getDate().toStdString().
+                                                c_str());
+                                item_date->setTextAlignment(Qt::AlignCenter | Qt::AlignVCenter);
+                QTableWidgetItem* item_borrower = new QTableWidgetItem(
                                                 objects[i].getBorrowerName().
                                                 c_str());
-                        item_borrower->setTextAlignment(
-                                        Qt::AlignCenter | Qt::AlignVCenter);
+                                item_borrower->setTextAlignment(Qt::AlignCenter | Qt::AlignVCenter);
                 // ASSIGNMENT
                         table_objects->setRowCount(table_objects->rowCount()+1);
                         table_objects->setItem(i+1,0, item_name);
                         table_objects->setItem(i+1,1, item_type);
-                        table_objects->setItem(i+1,2, item_borrower);
+                        table_objects->setItem(i+1,2, item_date);
+                        table_objects->setItem(i+1,3, item_borrower);
         }
 }
-
-
-
-
-
-
-void TEST_engine(Engine* engine) {
-        cerr << "OBJECTS" << endl;
-        vector<Object> vec = engine->getObjects();
-        for(unsigned int i = 0, count = vec.size(); i < count; i++)
-                cerr << "\t" << vec[i].getName() << " (" << vec[i].getType() 
-                        << ") by " << vec[i].getBorrowerName() << endl;
-
-        cerr << "BORROWERS" << endl;
-        vector<Borrower> bec = engine->getBorrowers();
-        for(unsigned int i = 0, count = bec.size(); i < count; i++)
-                cerr << "\t" << bec[i].getName() << " (" << bec[i].getMail() << ")" << endl;
-
-        cerr << "END" << endl;
-}
-
-
-void TEST_engine_prod() {
-        Engine engine = readFiles::getEngineFrom(FILE_BORROWER, FILE_OBJECT);
-        TEST_engine(&engine);
-        TEST_engine(&engine);
-}
-
 
 

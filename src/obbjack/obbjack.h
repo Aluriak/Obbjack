@@ -27,12 +27,10 @@
  *              DEFINES
  ****************************************************/
 #define PRGM_NAME "ObbJack Alpha"
-#define PRGM_WIDTH 669
+#define PRGM_WIDTH 769
 #define PRGM_HEIGH 300
 
 
-void TEST_engine_prod();
-void TEST_engine(Engine*);
 
 /****************************************************
  *              PREDECLARATIONS
@@ -75,8 +73,6 @@ class Obbjack : public QWidget {
                 void printObjectsOnTable();
                 void buttonCreatObjEnable();
 };
-
-
 
 
 
