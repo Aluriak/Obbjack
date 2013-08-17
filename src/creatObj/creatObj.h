@@ -11,6 +11,7 @@
 #include <QPushButton>
 #include <QComboBox>
 #include <QLineEdit>
+#include <QCalendarWidget>
 #include <QGroupBox>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -55,6 +56,7 @@ class CreatObj : public QDialog {
                 QComboBox*   combo_type;
                 QComboBox*   combo_borrower;
                 QLineEdit*   line_name;
+                QCalendarWidget* calendar_date;
                 // engine (simple ref)
                 Engine* engine;
         // PRIVATES METHODS

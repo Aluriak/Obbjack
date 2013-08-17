@@ -18,7 +18,7 @@ CreatObj::CreatObj(Engine* engine_, QWidget* parent) :
                         combo_type->addItem(str2qstr(OBJECT_DEFAULT_TYPE_3));
                         combo_type->addItem(str2qstr(OBJECT_DEFAULT_TYPE_4));
                         combo_type->addItem(str2qstr(OBJECT_DEFAULT_TYPE_5));
-                        //TODO: item can be added
+                        combo_type->setEditable(true);
                 combo_borrower = new QComboBox(this);
                         vector<Borrower> borrowers = engine->getBorrowers();
                         for(unsigned int i = 0, count = borrowers.size();
@@ -33,7 +33,10 @@ CreatObj::CreatObj(Engine* engine_, QWidget* parent) :
                         QObject::connect(button_creat, SIGNAL(clicked(bool)), 
                                         this, SLOT(sendObjectToEngine()));
         // LINE EDIT
-                line_name = new QLineEdit("Name, description");
+                line_name = new QLineEdit("Name, description", this);
+
+        // CALENDAR
+                calendar_date = new QCalendarWidget(this);
 
         // LAYOUTS
                 // Values layout
@@ -41,6 +44,7 @@ CreatObj::CreatObj(Engine* engine_, QWidget* parent) :
                         layout_values->addWidget(line_name);
                         layout_values->addWidget(combo_type);
                         layout_values->addWidget(combo_borrower);
+                        layout_values->addWidget(calendar_date);
                 QHBoxLayout* layout_button = new QHBoxLayout;
                         layout_button->addWidget(button_creat);
                         layout_button->addWidget(button_cancel);
@@ -76,9 +80,19 @@ CreatObj::~CreatObj() {
  *              PUBLIC SLOTS
  ****************************************************/
 void CreatObj::sendObjectToEngine() {
+        // CREAT DATE STRING
+        QDate qd = calendar_date->selectedDate();
+        string str = "";
+                str += qd.day();
+                str += "/";
+                str += qd.month();
+                str += "/";
+                str += qd.year();
+        // CREAT OBJECT
         engine->addObject(
                                 line_name->text().toStdString(), 
                                 combo_type->currentText().toStdString(),
+                                str,
                                 combo_borrower->currentText().toStdString()
                                 );
         this->accept();
